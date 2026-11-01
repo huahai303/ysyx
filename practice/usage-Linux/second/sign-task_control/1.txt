@@ -1,0 +1,7 @@
+sleep 10000
+^Z
+bg 1
+pgrep sleep
+jobs
+pkill sleep
+jobs

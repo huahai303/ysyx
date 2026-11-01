@@ -1,0 +1,2 @@
+printenv打印出来的环境变量是纯文本
+export输出的环境变量被双引号括着，且带有declare -x的前缀

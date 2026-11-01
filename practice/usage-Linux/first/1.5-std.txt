@@ -1,0 +1,3 @@
+ls /nonexistent /tmp > 1.5-test/output.log
+ls /nonexistent /tmp 2> 1.5-test/error.log
+ ls /nonexistent /tmp > 1.5-test/together.log 2>&1

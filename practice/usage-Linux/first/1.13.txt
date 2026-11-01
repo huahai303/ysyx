@@ -1,0 +1,1 @@
+find ~ -type f | sed 's/.*\.//' | sort | uniq -c | sort -nr | head -n 5

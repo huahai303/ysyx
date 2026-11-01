@@ -1,0 +1,9 @@
+glob:匹配文件或者目录名的写法
+*：匹配任意长度字符；*.txt -> file.txt / name.txt; file.* -> file.txt / file
+?:匹配恰好一个字符：file?.txt -> file1.txt / file2.txt
+[]:匹配括号内任意一个字符；file[1-9].txt -> file1.txt /file2.txt
+///////////////////////////////////////////////////////////////
+ls *.txt:列出所有txt格式的文件
+ls file?.txt:列出所有file+一个字符的txt格式文件
+ls file{a,b,c}.txt：列出filea.txt,fileb.txt,filec.txt
+

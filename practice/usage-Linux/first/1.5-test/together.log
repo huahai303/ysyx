@@ -1,0 +1,15 @@
+ls: cannot access '/nonexistent': No such file or directory
+/tmp:
+snap-private-tmp
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-colord.service-46fDV0
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-fwupd.service-hiHyOy
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-ModemManager.service-PH8FlA
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-power-profiles-daemon.service-E3lA8x
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-switcheroo-control.service-Nc9H9U
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-systemd-logind.service-giLWBG
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-systemd-oomd.service-YxVVUD
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-systemd-resolved.service-vLPi9e
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-systemd-timesyncd.service-0pmz2Q
+systemd-private-459e7dffedc9441dac1df2167dcb03b7-upower.service-18wUD6
+tmux-1000
+vmware-root_619-4013919989

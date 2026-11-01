@@ -1,0 +1,1 @@
+ls -a -l -h -t --color==auto
