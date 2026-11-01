@@ -1,0 +1,9 @@
+han@han-ubuntu:~$ cat /usr/share/dict/words | grep -E 'a*.a*.a' | grep -v "'s$" | wc -l
+28156
+han@han-ubuntu:~$ cat /usr/share/dict/words | tr '[:upper:]' '[:lower:]' | grep -E 'a*.a*.a' | grep -v "'s$" | grep -o '..$' | sort | uniq -c | sort -rn | head -n 3
+   2340 es
+   2177 ed
+   2172 ng
+han@han-ubuntu:~$ cat /usr/share/dict/words | tr '[:upper:]' '[:lower:]' | grep -E 'a*.a*.a' | grep -v "'s$" | grep -o '..$' | sort | uniq | wc -l
+312
+

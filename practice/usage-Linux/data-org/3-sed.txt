@@ -1,0 +1,4 @@
+sed s/REGEX/SUBSTITUTION/ input.txt > input.txt
+shell执行时会见执行>，这会导致之后的input文件中变空，因此整个指令就无法执行
+sed -i/REGEX/SUBSTITUTION/ input.txt
+使用sed提供的-i参数即可
