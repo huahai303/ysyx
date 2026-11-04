@@ -1,0 +1,7 @@
+git log --graph --oneline --decorate --all
+git log -1 README.md
+git blame _config.yml | grep "collections:"
+--graph :绘制提交历史树状图
+--oneline :每次提交压缩成一行显示
+--decorate :显示引用，知道在那个分支上
+--all :显示所有分支的历史
