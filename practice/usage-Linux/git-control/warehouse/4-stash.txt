@@ -1,0 +1,29 @@
+han@han-ubuntu:~/ysyx/ysyx-workbench/practice/usage-Linux/git-control/warehouse/missing-semester-cn.github.io$ git stash
+Saved working directory and index state WIP on master: 4f2fedd Merge pull request #246 from Avicennasis/docs/fix-typos
+han@han-ubuntu:~/ysyx/ysyx-workbench/practice/usage-Linux/git-control/warehouse/missing-semester-cn.github.io$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+han@han-ubuntu:~/ysyx/ysyx-workbench/practice/usage-Linux/git-control/warehouse/missing-semester-cn.github.io$ git stash pop
+On branch master
+Your branch is up to date with 'origin/master'.
+
+	Changes not staged for commit:
+  	(use "git add <file>..." to update what will be committed)
+		(use "git restore <file>..." to discard changes in working directory)
+	modified:   robots.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (1af10ef89210f7e40f961286eabfb5c48db61c10)
+han@han-ubuntu:~/ysyx/ysyx-workbench/practice/usage-Linux/git-control/warehouse/missing-semester-cn.github.io$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+		(use "git restore <file>..." to discard changes in working directory)
+	modified:   robots.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
