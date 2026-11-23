@@ -1,0 +1,120 @@
+C 语言文件操作函数总结
+（头文件：<stdio.h>；fcloseall 为非标准/DOS 扩展）
+
+============================================================
+
+1. fopen —— 打开文件
+定义：FILE *fopen(const char *filename, const char *mode);
+作用：以指定模式打开文件，并返回指向该文件的 FILE 指针（流）。
+     打开失败时返回 NULL。
+常用模式：
+     "r"  只读（文件必须已存在）
+     "w"  只写（不存在则创建，存在则清空）
+     "a"  追加写（在文件末尾添加，不存在则创建）
+     "r+" 读写（文件必须已存在）
+     "w+" 读写（清空或新建）
+     "a+" 读+追加
+     加 "b" 表示二进制模式，如 "rb"、"wb+"。
+
+2. freopen —— 重定向文件流
+定义：FILE *freopen(const char *filename, const char *mode, FILE *stream);
+作用：将一个已打开的流（如 stdin、stdout、stderr）重新定向到指定文件。
+     常用于把标准输出重定向到文件。
+     成功返回新的 FILE 指针，失败返回 NULL。
+示例：freopen("out.txt", "w", stdout);  // 之后 printf 的内容写入 out.txt
+
+3. fdopen —— 由文件描述符得到流
+定义：FILE *fdopen(int fd, const char *mode);
+作用：把 POSIX 文件描述符（int 型，如 open() 返回的 fd）关联到一个
+     FILE 流上，使低级文件描述符可以使用 stdio 的高级读写函数。
+     mode 必须与该描述符原本的打开模式兼容。
+     成功返回 FILE 指针，失败返回 NULL。
+注意：属于 POSIX 标准，Windows 上为 _fdopen。
+
+4. fclose —— 关闭文件
+定义：int fclose(FILE *stream);
+作用：关闭指定的文件流：先刷新输出缓冲区（把未写出的数据写入文件），
+     再释放与该流关联的资源。关闭后指针不可再使用。
+     成功返回 0，失败返回 EOF。
+
+5. fcloseall —— 关闭所有流（非标准）
+定义：int fcloseall(void);
+作用：关闭除 stdin、stdout、stderr（以及标准错误流）之外的所有打开的流，
+     并刷新全部缓冲区。属于 DOS/部分编译器的扩展，C 标准中没有此函数，
+     不保证可移植。成功返回关闭的流个数，失败返回 EOF。
+
+6. fscanf —— 按格式从文件读取
+定义：int fscanf(FILE *stream, const char *format, ...);
+作用：从指定流中按 format 格式读取并解析数据，写入后面给出的变量地址。
+     与 scanf 用法一致，只是多了流参数。
+     返回成功匹配并赋值的项数；遇到文件结束或出错返回 EOF。
+示例：fscanf(fp, "%d %s", &num, str);
+
+7. fgets —— 从文件读取一行字符串
+定义：char *fgets(char *str, int n, FILE *stream);
+作用：从流中读取最多 n-1 个字符存入 str，遇到换行符 '\n' 或文件结束
+     就停止，并自动在末尾加 '\0'。换行符会保留在字符串中（与 gets 不同）。
+     成功返回 str 指针；到达文件末尾且未读到字符或出错返回 NULL。
+     是读取一行文本的安全方式（gets 因缓冲区溢出已被废弃）。
+
+8. fgetpos —— 获取文件位置
+定义：int fgetpos(FILE *stream, fpos_t *pos);
+作用：把流当前的读写位置保存到 fpos_t 类型变量 pos 中，
+     之后可用 fsetpos 恢复该位置。
+     成功返回 0，失败返回非 0 并设置 errno。
+     与 ftell 相比，fpos_t 能表示所有系统上的文件位置（可移植性更好）。
+
+9. fseek —— 移动文件位置指针
+定义：int fseek(FILE *stream, long offset, int whence);
+作用：把流的位置指针从 whence 基准处移动 offset 个字节，
+     并清除文件结束标志、撤销 ungetc 的效果。
+whence 取值：
+     SEEK_SET  从文件开头（偏移 0）起算
+     SEEK_CUR  从当前位置起算
+     SEEK_END  从文件末尾起算
+     成功返回 0，失败返回非 0。
+示例：fseek(fp, 0, SEEK_END);  // 跳到文件末尾（常用来求文件大小）
+
+10. ftell —— 返回当前位置
+定义：long ftell(FILE *stream);
+作用：返回流当前位置指针距文件开头的字节偏移量。
+     常用于配合 fseek 获取文件大小。
+     成功返回偏移量，失败返回 -1L 并设置 errno。
+
+11. rewind —— 重置位置到文件开头
+定义：void rewind(FILE *stream);
+作用：把流的位置指针重新设置到文件开头，等价于
+     (void)fseek(stream, 0L, SEEK_SET)，同时还清除错误标志。
+     无返回值。
+
+12. fprintf —— 按格式写入文件
+定义：int fprintf(FILE *stream, const char *format, ...);
+作用：按 format 格式把数据输出到指定流（而不是屏幕），
+     与 printf 用法一致，只是多了流参数。
+     返回实际写出的字符数，出错返回负值。
+示例：fprintf(fp, "num = %d\n", num);
+
+13. fwrite —— 以二进制块写入文件
+定义：size_t fwrite(const void *ptr, size_t size, size_t count, FILE *stream);
+作用：从内存 ptr 处把 count 个大小为 size 字节的数据块写入流。
+     适合写结构体、数组等二进制数据。
+     返回成功写入的块个数（size_t 类型），小于 count 说明出错。
+示例：fwrite(&stu, sizeof(Student), 1, fp);  // 写入一个结构体
+
+14. fread —— 以二进制块读取文件
+定义：size_t fread(void *ptr, size_t size, size_t count, FILE *stream);
+作用：从流中读取 count 个大小为 size 字节的数据块存入内存 ptr 处。
+     与 fwrite 配对，用于二进制数据的批量读取。
+     返回成功读取的块个数；到文件末尾或出错时可能小于 count，
+     可用 feof / ferror 进一步区分原因。
+示例：n = fread(buf, sizeof(char), 100, fp);  // 读最多 100 个字符
+
+============================================================
+
+按功能分类小结：
+  打开/关闭：fopen、freopen、fdopen、fclose、fcloseall
+  格式化读写：fscanf（读）、fprintf（写）
+  字符串/行读写：fgets（读一行）
+  二进制块读写：fread（读）、fwrite（写）
+  文件位置控制：fseek（移动）、ftell（查询偏移）、
+               fgetpos（保存位置）、rewind（回到开头）
