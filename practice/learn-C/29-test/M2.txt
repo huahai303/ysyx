@@ -1,0 +1,30 @@
+CFLAGS=-g -O2 -Wall -Wextra -Isrc -DNDEBUG $(OPTFLAGS)
+LIBS=-ldl $(OPTLIBS)
+
+SOURCES=$(wildcard src/*.c)
+OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
+
+TEST_SRC=$(wildcard tests/*_test.c)
+TESTS=$(patsubst %.c,%,$(TEST_SRC))
+
+TARGET=build/libex29.so
+
+all: $(TARGET) tests
+
+# 1. 编译动态库
+$(TARGET): CFLAGS += -fPIC
+$(TARGET): build $(OBJECTS)
+	$(CC) -shared -o $@ $(OBJECTS)
+
+build:
+	@mkdir -p build
+
+# 2. 跑测试（纯净版，不要任何手动覆盖规则）
+.PHONY: tests
+tests: CFLAGS += -ldl
+tests: $(TARGET) $(TESTS)
+	@echo "开始运行测试..."
+	./tests/ex29_test
+
+clean:
+	rm -rf build $(OBJECTS) $(TESTS)
